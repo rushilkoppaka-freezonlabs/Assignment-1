@@ -45,6 +45,8 @@ def read_mail():
                     #     f.write(part.get_payload(decode=True))
                     for header in ['Subject', 'To', 'From', 'Date']:
                         email_data[header] = email_message[header]
+                    email_data['username'], email_data['email ID'] = email_message['From'].rsplit(' ',1)
+                    print(email_message['From'].split(' '))
                     all_email.append(email_data)
 
     data_frame = pd.DataFrame(all_email)
