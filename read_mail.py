@@ -40,14 +40,15 @@ def read_mail():
                             # file_path = attachment_dir + '/' + file_name
                             # with open(file_path, 'wb') as f:
                             #     f.write(part.get_payload(decode=True))
-
-                    if bool(file_name):
-                        for header in ['Subject', 'To', 'From', 'Date']:
-                            email_data[header] = email_message[header]
-
-                    all_email.append(email_data)
+                            for header in ['Subject', 'To', 'From', 'Date']:
+                                email_data[header] = email_message[header]    
+                                all_email.append(email_data)
+                                
         data_frame = pd.DataFrame(all_email)
         return data_frame
+#DataFrame columns format -> attachment, Subject, To, From, Date
+#There maybe multiple attachments for single mail
+
 
 if __name__ == '__main__':
     inbox = read_mail()
