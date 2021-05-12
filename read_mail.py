@@ -53,7 +53,7 @@ def read_mail():
     return data_frame
 
 
-# DataFrame columns format -> attachment, Subject, To, From, Date
+# DataFrame columns format -> attachment, file name, Document type, Subject, To, From, Date, username, email ID
 # There maybe multiple attachments for single mail
 # Each attachment will have its own row with all values.
 
