@@ -42,12 +42,13 @@ def read_mail():
                             #     f.write(part.get_payload(decode=True))
                             for header in ['Subject', 'To', 'From', 'Date']:
                                 email_data[header] = email_message[header]    
-                                all_email.append(email_data)
+                            all_email.append(email_data)
                                 
         data_frame = pd.DataFrame(all_email)
         return data_frame
 #DataFrame columns format -> attachment, Subject, To, From, Date
 #There maybe multiple attachments for single mail
+#Each attachment will have its own row with all values.
 
 
 if __name__ == '__main__':
