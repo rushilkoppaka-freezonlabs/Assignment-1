@@ -2,56 +2,60 @@ import imaplib
 import email
 import pandas as pd
 
-host= 'imap.gmail.com'
+host = 'imap.gmail.com'
 username = "abcd12ghijk@gmail.com"
 password = "abcd@1234"
 
 attachment_dir = "/Users/rushilkoppaka/PycharmProjects/freezonlabs_internship"
 
+
 def read_mail():
-        mail = imaplib.IMAP4_SSL(host)
-        mail.login(username,password)
-        mail.select("inbox")
+    mail = imaplib.IMAP4_SSL(host)
+    mail.login(username, password)
+    mail.select("inbox")
 
-        _, search_data = mail.search(None, 'ALL')
+    _, search_data = mail.search(None, 'ALL')
 
-        all_email=[]
+    all_email = []
 
-        for num in search_data[0].split() :
-            _, data = mail.fetch(num, '(RFC822)')
-            _,b = data[0]
+    for num in search_data[0].split():
+        _, data = mail.fetch(num, '(RFC822)')
+        _, b = data[0]
 
-            email_message = email.message_from_bytes(b)
-            if 'invoice' in email_message['Subject']:
-                    email_data = {'attachment': []}
+        email_message = email.message_from_bytes(b)
+        if 'invoice' in email_message['Subject']:
+            email_data = {'attachment': [], 'file name': [], 'Document type': []}
 
-                    for part in email_message.walk():
-                        if part.get_content_type()=="text/plain" :
-                            body= part.get_payload(decode=True)
-                            email_data['Body'] = body.decode()
-                            continue
-                        if part.get_content_maintype() == 'multipart':
-                            continue
-                        if part.get('Content-Disposition') is None :
-                            continue
-                        file_name = part.get_filename()
-                        if bool(file_name):
-                            email_data['attachment'].append(part.get_payload(decode=True))
-                            # file_path = attachment_dir + '/' + file_name
-                            # with open(file_path, 'wb') as f:
-                            #     f.write(part.get_payload(decode=True))
-                            for header in ['Subject', 'To', 'From', 'Date']:
-                                email_data[header] = email_message[header]    
-                            all_email.append(email_data)
-                                
-        data_frame = pd.DataFrame(all_email)
-        return data_frame
-#DataFrame columns format -> attachment, Subject, To, From, Date
-#There maybe multiple attachments for single mail
-#Each attachment will have its own row with all values.
+            for part in email_message.walk():
+                if part.get_content_type() == "text/plain":
+                    body = part.get_payload(decode=True)
+                    email_data['Body'] = body.decode()
+                    continue
+                if part.get_content_maintype() == 'multipart':
+                    continue
+                if part.get('Content-Disposition') is None:
+                    continue
+                file_name = part.get_filename()
+                if bool(file_name):
+                    email_data['attachment'].append(part.get_payload(decode=True))
+                    email_data['file name'].append(file_name)
+                    email_data['Document type'].append(file_name.split('.')[1])
+                    # file_path = attachment_dir + '/' + file_name
+                    # with open(file_path, 'wb') as f:
+                    #     f.write(part.get_payload(decode=True))
+                    for header in ['Subject', 'To', 'From', 'Date']:
+                        email_data[header] = email_message[header]
+                    all_email.append(email_data)
+
+    data_frame = pd.DataFrame(all_email)
+    return data_frame
+
+
+# DataFrame columns format -> attachment, Subject, To, From, Date
+# There maybe multiple attachments for single mail
+# Each attachment will have its own row with all values.
 
 
 if __name__ == '__main__':
     inbox = read_mail()
     print(inbox)
-    #print(inbox.drop('attachment',axis=1))
