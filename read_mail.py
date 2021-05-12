@@ -23,10 +23,7 @@ def read_mail():
 
             email_message = email.message_from_bytes(b)
             if 'invoice' in email_message['Subject']:
-                    email_data = {}
-
-                    for header in ['Subject', 'To', 'From', 'Date']:
-                        email_data[header] = email_message[header]
+                    email_data = {'attachment': []}
 
                     for part in email_message.walk():
                         if part.get_content_type()=="text/plain" :
@@ -39,10 +36,14 @@ def read_mail():
                             continue
                         file_name = part.get_filename()
                         if bool(file_name):
-                            email_data['attachment']= part.get_payload(decode=True)
+                            email_data['attachment'].append(part.get_payload(decode=True))
                             # file_path = attachment_dir + '/' + file_name
                             # with open(file_path, 'wb') as f:
                             #     f.write(part.get_payload(decode=True))
+
+                    if bool(file_name):
+                        for header in ['Subject', 'To', 'From', 'Date']:
+                            email_data[header] = email_message[header]
 
                     all_email.append(email_data)
         data_frame = pd.DataFrame(all_email)
