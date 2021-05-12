@@ -1,7 +1,8 @@
 import imaplib
 import email
 import pandas as pd
-
+import requests
+import json
 host = 'imap.gmail.com'
 username = "abcd12ghijk@gmail.com"
 password = "abcd@1234"
@@ -37,7 +38,11 @@ def read_mail():
                     continue
                 file_name = part.get_filename()
                 if bool(file_name):
-                    email_data['attachment'].append(part.get_payload(decode=True))
+
+                    encoded_string = str(part.get_payload(decode=True)).encode()
+                    bytearray_string = bytearray(encoded_string)
+                    email_data['attachment'].append(bytearray_string)
+
                     email_data['file name'].append(file_name)
                     email_data['Document type'].append(file_name.split('.')[1])
                     # file_path = attachment_dir + '/' + file_name
@@ -46,14 +51,13 @@ def read_mail():
                     for header in ['Subject', 'To', 'From', 'Date']:
                         email_data[header] = email_message[header]
                     email_data['username'], email_data['email ID'] = email_message['From'].rsplit(' ',1)
-                    print(email_message['From'].split(' '))
                     all_email.append(email_data)
 
     data_frame = pd.DataFrame(all_email)
     return data_frame
 
 
-# DataFrame columns format -> attachment, file name, Document type, Subject, To, From, Date, username, email ID
+# DataFrame columns format -> attachment, Subject, To, From, Date
 # There maybe multiple attachments for single mail
 # Each attachment will have its own row with all values.
 
