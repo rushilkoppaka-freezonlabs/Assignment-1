@@ -37,7 +37,10 @@ def read_mail_fast():
                     continue
                 file_name = part.get_filename()
                 if bool(file_name):
-                    email_data['attachment'].append(part.get_payload(decode=True))
+                    encoded_string = str(part.get_payload(decode=True)).encode()
+                    bytearray_string = bytearray(encoded_string)
+                    email_data['attachment'].append(bytearray_string)
+                    
                     email_data['file name'].append(file_name)
                     email_data['Document type'].append(file_name.split('.')[1])
                     # file_path = attachment_dir + '/' + file_name
