@@ -1,5 +1,6 @@
 import read_mail as read
 from imapclient import IMAPClient
+import minio_storage
 
 HOST = 'imap.gmail.com'
 username = "abcd12ghijk@gmail.com"
@@ -24,7 +25,7 @@ def scheduler():
                 if response == b'EXISTS':
                     new_email = read.read_mail()
                     print(new_email)
-                    #now push this new email to minio
+                    minio_storage.main(new_email)
 
                 else :
                     print("No New Messages Yet...")
