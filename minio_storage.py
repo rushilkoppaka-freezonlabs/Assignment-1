@@ -17,7 +17,7 @@ def listToString(s):
     return str1
 
 
-def main(New_mail):
+def main(inbox, doc):
     # Create a client with the MinIO server playground, its access key
     # and secret key.
     client = Minio(
@@ -26,7 +26,6 @@ def main(New_mail):
         secret_key="zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG",
     )
 
-    inbox, doc = New_mail
     """
     print(type(doc[0]))
     print(len(inbox)) 
