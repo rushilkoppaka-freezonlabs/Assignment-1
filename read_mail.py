@@ -20,9 +20,10 @@ def read_mail():
     all_email = []
 
     for num in search_data[0].split():
+        #extracting one email
         _, data = mail.fetch(num, '(RFC822)')
         _, b = data[0]
-        #extracting one email
+
         email_message = email.message_from_bytes(b)
         if 'invoice' in email_message['Subject']:
             email_data = {'attachment': [], 'file name': [], 'Document type': []}
