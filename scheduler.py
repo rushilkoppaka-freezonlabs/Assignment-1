@@ -23,9 +23,9 @@ def scheduler():
                     response=  response[0][1]
 
                 if response == b'EXISTS':
-                    new_email = read.read_mail()
+                    new_email,attachment = read.read_mail()
                     print(new_email)
-                    minio_storage.main(new_email)
+                    minio_storage.main(new_email,attachment)
 
                 else :
                     print("No New Messages Yet...")
