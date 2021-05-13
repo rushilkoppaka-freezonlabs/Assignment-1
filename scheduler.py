@@ -13,15 +13,16 @@ def scheduler():
 
         # Start IDLE mode
         server.idle()
-        print("Connection is now in IDLE mode, send yourself an email or quit with ^c")
+        print("Connection is now in IDLE mode, send yourself an email")
 
         while True:
             try:
-                # Wait for up to 30 seconds for an IDLE response
+                # Wait for up to 5 seconds for an IDLE response
                 response= server.idle_check(timeout=5)
                 if response != [] :
                     response=  response[0][1]
-
+                
+                #check if new mail received, if received call read_mail and send data to minio
                 if response == b'EXISTS':
                     new_email,attachment = read.read_mail()
                     print(new_email)
