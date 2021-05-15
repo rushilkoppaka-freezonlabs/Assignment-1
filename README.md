@@ -9,8 +9,12 @@
 ## TASK 1:
 
    * We have  made a scheduler which constanty check our email for any mail subject **invoice**.
+   ![mail](https://drive.google.com/file/d/1z_ZNM5bwM3y6xMspeRlXXY0dL2u2uQdI/view?usp=sharing)
    * Once it figure out it is invoice mail it extract all the information from the mail.
+   
    * It store the data in form of **dataframe** you can store it any form as you like to.
+   ![uploading](https://drive.google.com/file/d/1zU1ksn_7dEySwak6SBHGhQsT2nNo4FyJ/view?usp=sharing)
+  
 ## TASK 2:
    
    * We have to store the data to minio and there is a format in which we store data into it.
@@ -27,4 +31,5 @@
    
    * Above all data was on public server where people have uploaded the data for learning minio
    * we can setup our own server for object storage.
-   * for simple and secure step up, we have change the access key and secret key, so that no one can access out data
+   * for simple and secure step up, we have change the access key and secret key, so that no one can access out data.
+    ![minio](https://drive.google.com/file/d/1zI9bsr25jyOlK6kv8OZ8HK6hreQC3AjN/view?usp=sharing)
