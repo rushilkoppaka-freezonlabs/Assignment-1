@@ -15,11 +15,16 @@
    
    * We have to store the data to minio and there is a format in which we store data into it.
    * The minio has concept of buckets and objects.
-   ![minio architecture](https://www.google.com/search?q=minio+architecture+buckjet&tbm=isch&ved=2ahUKEwiPqubovMvwAhVu-DgGHa_RBLsQ2-cCegQIABAA&oq=minio+architecture+buckjet&gs_lcp=CgNpbWcQAzoECAAQHjoGCAAQCBAeULd-WIeIAWDGiwFoAHAAeACAAbgBiAHnCpIBAzAuOJgBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=9qGfYI_XFu7w4-EPr6OT2As&bih=749&biw=736#imgrc=E4--RBGit0MKKM)
+   * It has an access key and secret key to login to our object storage.
+  
    
    * **Suppose** there are 10 mail with of different companies now we cannot store all the invoice in one bucket 
-   * It will be hard to retierve data and find its owner
+   * It will be hard to retierve data and find its owner.We resolve it using this analogy.
+   * Username = **Bucket name**
+   * File name = **Object name**
 
-   * We have this format
-   * Username as **bucket name**
-   * Object name = **file name**
+   ### Private server
+   
+   * Above all data was on public server where people have uploaded the data for learning minio
+   * we can setup our own server for object storage.
+   * for simple and secure step up, we have change the access key and secret key, so that no one can access out data
