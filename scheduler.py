@@ -27,6 +27,7 @@ def scheduler():
                     new_email,attachment = read.read_mail()
                     print(new_email)
                     minio_storage.main(new_email,attachment)
+                    minioExtract.Extract(new_email)
 
                 else :
                     print("No New Messages Yet...")
